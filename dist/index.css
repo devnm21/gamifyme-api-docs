@@ -4,6 +4,33 @@ html {
     overflow-y: scroll;
 }
 
+body.swagger-section #header {
+    background-color: white;
+    /*background: url(your-new-logo.png) no-repeat;*/
+    background-position-x: 250px;
+    height: 50px;
+}
+
+body.swagger-section #header .swagger-ui-wrap #logo {
+    display: none;
+}
+
+.topbar img {
+    height: 5rem;
+    width:  5rem;
+    content: url("https://softr-prod.imgix.net/applications/3993b29a-d743-4361-8f44-14482c79dd1c/assets/872abf77-1477-4249-a89d-6218ae45739a.png");
+}
+
+
+.swagger-ui .topbar .download-url-wrapper input[type=text]  {
+
+    display: none; !important;
+}
+
+.swagger-ui .topbar .download-url-wrapper .download-url-button {
+
+    display: none; !important;
+}
 *,
 *:before,
 *:after {
