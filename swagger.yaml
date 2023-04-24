@@ -4,7 +4,9 @@ info:
   title: GamifyMe API
   description: |
     ## Welcome to the GamifyMe API documentation. 
-    Please note that this API requires authentication using the x-gamifyme-token header. 
+    #### Please note that this API requires authentication using the `x-gamifyme-token header`. 
+    
+    You can find your API key in `API Docs` section of your dashboard
     To authenticate, please click on the 'Authorize' button and enter your API key.
     
     ## Rate Limited
@@ -23,7 +25,7 @@ info:
     
     You can also refer `X-GamifyMe-Limit-Reset-In` which is when the limit will reset (the given unit will be in seconds)
 
-basePath: https://bg6pwcfvp3.execute-api.ap-south-1.amazonaws.com
+basePath: https://bg6pwcfvp3.execute-api.ap-south-1.amazonaws.com/v1
 securityDefinitions:
   ApiKeyAuth:
     type: apiKey
@@ -36,7 +38,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /boards/v1/points:
+  /boards/points:
     post:
       security:
         - ApiKeyAuth: [ ]
