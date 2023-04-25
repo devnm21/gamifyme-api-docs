@@ -25,7 +25,7 @@ info:
     
     You can also refer `X-GamifyMe-Limit-Reset-In` which is when the limit will reset (the given unit will be in seconds)
 
-host: https://bg6pwcfvp3.execute-api.ap-south-1.amazonaws.com
+host: bg6pwcfvp3.execute-api.ap-south-1.amazonaws.com
 basePath: /v1
 securityDefinitions:
   ApiKeyAuth:
