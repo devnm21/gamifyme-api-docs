@@ -9,21 +9,27 @@ info:
     You can find your API key in `API Docs` section of your dashboard
     To authenticate, please click on the 'Authorize' button and enter your API key.
     
-    ## Rate Limited
+    ## Rate Limit
     For the purpose of beta the APIs are *rate-limited to a maximum of 500 requests per day* (refer `X-GamifyMe-Rate-Limit` in response as it might change)  per API Key(User).
     
     
     When the limit is exceeded, the server will return a 429 Too Many Requests status code.
     
-    
     To check the current rate limit status, the response headers include the `X-GamifyMe-Rate-Limit` and `X-GamifyMe-Remaining-Calls` headers.
-    
     
     The `X-GamifyMe-Remaining-Calls` header indicates the total number of requests allowed for rest of the day while `X-GamifyMe-Rate-Limit` header
     indicates the remaining number of requests available for the current day.
     
-    
     You can also refer `X-GamifyMe-Limit-Reset-In` which is when the limit will reset (the given unit will be in seconds)
+    
+    ## Credit System
+    
+    ### Payout
+    For Indian users, the payout will be made in 6-7 days directly to the bank.
+    For other nationals, the payout will be initated in within 7 days to Paypal id
+    
+    ### Charges
+    No charges until total payments cross $10,000
 
 host: bg6pwcfvp3.execute-api.ap-south-1.amazonaws.com
 basePath: /v1
@@ -228,4 +234,130 @@ paths:
           description: Unauthorized request
         '429':
           description: Rate limit exceeded
+  /transactions:
+    get:
+      security:
+        - ApiKeyAuth: [ ]
+      summary: Fetch transactions
+      description: Get all the transactions done for purchasing credits in your app
+      tags:
+        - Transactions
+      parameters:
+        - name: 'startDate'
+          in: query
+          description: timestamp value in ISO format or unix timestamp from where the transactions to sort
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: page number. The API returns 20 transactions per request by defalut
+          schema:
+            type: number
+        - name: playerId
+          in: query
+          description: Filter for a specific player
+          schema:
+            type: string
+        - name: populate
+          in: query
+          description: reference documents that can be populated. This API can populate -> 'player'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/definitions/Transaction'
+                properties:
+                  id:
+                    type: string
+                    description: Unique id for the payment attempt.
+                  paymentLink:
+                    type: string
+                    description: Payment Link
+        '400':
+          description: Invalid input parameters
+        '401':
+          description: Unauthorized request
+        '429':
+          description: Rate limit exceeded
+  /transactions/{id}:
+    get:
+      security:
+        - ApiKeyAuth: [ ]
+      summary: Fetch a transaction
+      description: Get a particular transaction by it's id
+      tags:
+        - Transactions
+      parameters:
+        - name: populate
+          in: query
+          description: reference documents that can be populated. This API can populate -> 'player'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Transaction'
+
+        '400':
+          description: Invalid input parameters
+        '401':
+          description: Unauthorized request
+        '429':
+          description: Rate limit exceeded
+definitions:
+  Transactions:
+    type: array
+    items:
+      $ref: '#/definitions/ContactModel'
+
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      playerId:
+        type: string
+        example: 6adcwcerf24552
+      credits:
+        type: number
+        example: 10
+      amount:
+        type: number
+        example: 5.29
+      player:
+        description: if populated
+        $ref: '#/definitions/Player'
+  Player:
+    type: object
+    properties:
+      displayName:
+        type: integer
+        example: 1
+      fullName:
+        type: string
+        example: 6adcwcerf24552
+      profilePictureUrl:
+        type: number
+        example: 10
+      playerId:
+        type: number
+        example: 5.29
+      id:
+        type: number
+        example: 5.29
+
+
+
+
 
